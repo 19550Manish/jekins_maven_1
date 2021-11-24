@@ -9,7 +9,7 @@ pipeline {
         
         stage('Test') { 
             steps {
-                sh "mvn test -f jekins_maven_1"
+                sh "mvn test -f jenkins_pipeline_1"
             }
              post{
                 always{
@@ -20,7 +20,7 @@ pipeline {
       
         stage('Deploy') { 
             steps {
-                sh "mvn -f jakenis_maven_1 package "
+                sh "mvn -f jenkins_pipeline_1 package "
             }
             
         }
