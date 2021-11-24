@@ -1,9 +1,20 @@
 pipeline {
     agent any 
     stages {
-        stage('compile and clean') { 
+        stage('Compile and clean') { 
             steps {
                 sh "mvn clean compile"
+            }
+        }
+        
+        stage('Test') { 
+            steps {
+                sh "mvn test"
+            }
+             post{
+                always{
+                    junit allowEmptyResults: true, testResults:'target/surefire-reports/*.xml'
+                }
             }
         }
       
@@ -11,7 +22,9 @@ pipeline {
             steps {
                 sh "mvn  package "
             }
+            
         }
+        
         stage('Build & Docker Image') { 
             steps {
                 sh "docker build -t manish19550/jenkins_docker_myapp:${BUILD_NUMBER} ."
@@ -22,7 +35,7 @@ pipeline {
                 sh "docker login -u manish19550 -p free@19550"
             }
         }
-         stage('push to repository') { 
+         stage('Push to repository') { 
             steps {
                 sh "docker push manish19550/jenkins_docker_myapp:${BUILD_NUMBER} ."
             }
