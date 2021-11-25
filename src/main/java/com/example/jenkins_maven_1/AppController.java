@@ -8,7 +8,7 @@ public class AppController {
 	@GetMapping
 	public String test(){
 		System.out.println("hello_world");
-		return "welcome to the devops";
+		return "helloworld";
 	}
 
 }
